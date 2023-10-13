@@ -17,6 +17,7 @@ data.map((value) => {
     title.append(document.createTextNode(value.title));
 
     let subtitle = document.createElement("span");
+    subtitle.className = "subtitle"
     subtitle.append(document.createTextNode(value.subtitle+" transacciones"));
 
     let tns = document.createElement("div");

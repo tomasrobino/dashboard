@@ -36,11 +36,16 @@ ul {
 .tns {
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
 }
 
 .title {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
+}
+
+.subtitle {
+  color: grey;
 }
 
 .buttonDiv {
