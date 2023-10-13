@@ -64,24 +64,30 @@ data.map((value) => {
     item.draggable = true;
     item.append(div, i);
 
-    item.addEventListener("dragstart", (e) => {
+    let box = dots.parentNode.parentNode.parentNode
+
+    dots.addEventListener("dragstart", (e) => {
+        console.log(box)
         setTimeout( () => {
-            if (item.querySelector("ul")!==null) {
-                if (item.querySelector("ul").querySelector("li")===null) {
-                    item.removeChild(item.querySelector("ul"));
-                    item.classList.remove("nested");
-                    item.classList.add("dragging");
+            if (box.querySelector("ul")!==null) {
+                if (box.querySelector("ul").querySelector("li")===null) {
+                    box.removeChild(box.querySelector("ul"));
+                    box.classList.remove("nested");
+                    box.classList.add("dragging");
                 } else {
-                    item.querySelector("ul").querySelector("li").classList.add("dragging");
+                    box.classList.add("dragging");
                 }
             } else {
-                item.classList.add("dragging");
+                box.classList.add("dragging");
             }
         }, 0);
     });
-    item.addEventListener("dragend", dragEnd);
+    dots.addEventListener("dragend", () => {
+        let draggingItem = box;
+        draggingItem.classList.remove("dragging");
+    });
     item.addEventListener("dragenter", (e) => {
-        if (e.currentTarget.parentNode.parentNode.tagName==="LI") {
+        if (box.parentNode.parentNode.tagName==="LI") {
             currentHover = e.currentTarget.parentNode.parentNode;
         } else {
             currentHover = e.currentTarget;
@@ -89,7 +95,7 @@ data.map((value) => {
 
         let draggingItem = list.querySelector(".dragging");
         if (draggingItem!==currentHover) {
-            if (e.clientY <= list.offsetTop+list.offsetHeight && e.clientY >= list.offsetTop && e.clientX > list.offsetLeft+200 && !draggingItem.classList.contains("nested")) {
+            if (e.clientY <= list.offsetTop+list.offsetHeight && e.clientY >= list.offsetTop && e.clientX > list.offsetLeft+50 && !draggingItem.classList.contains("nested")) {
                 if (currentHover.classList.contains("nested")) {
                     currentHover.querySelector("ul").append(draggingItem);
                 } else {
@@ -113,35 +119,7 @@ data.map((value) => {
         }
     })
 
-
     listElements.push(item)
 })
 
 list.append(...listElements);
-
-function dragEnd(e) {
-    let draggingItem = e.target;
-    draggingItem.classList.remove("dragging");
-    /*
-    if (draggingItem!==currentHover &&  e.clientY <= list.offsetTop+list.offsetHeight && e.clientY >= list.offsetTop && e.clientX > list.offsetLeft+200 && !draggingItem.classList.contains("nested")) {
-        if (currentHover.classList.contains("nested")) {
-            currentHover.querySelector("ul").append(draggingItem);
-        } else {
-            let childList = document.createElement("ul");
-            childList.append(draggingItem);
-            currentHover.append(childList);
-            currentHover.classList.add("nested")
-        }
-    } else if (e.clientY > list.offsetTop+list.offsetHeight) {
-        list.insertBefore(draggingItem, currentHover.nextSibling);
-    } else if (e.clientY < list.offsetTop) {
-        list.insertBefore(draggingItem, currentHover.previousSibling);
-    } else {
-        list.insertBefore(draggingItem, currentHover.nextSibling);
-        if (draggingItem.querySelector("ul") !== null && draggingItem.querySelector("ul").querySelector("li") === null) {
-            draggingItem.remove(draggingItem.querySelector("ul"));
-            draggingItem.classList.remove("nested");
-        }
-    }
-    */
-}
