@@ -1,13 +1,20 @@
+body {
+  background-color: lightgrey;
+}
+
 .details {
-  height: 50px;
-  width: 200px;
+  width: 70vw;
   background-color: red;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   border-color: black;
   border-width: 2px;
   border-style: solid;
   padding: 3px;
+}
+
+.left {
+  display: flex;
 }
 
 .tns {
@@ -15,6 +22,21 @@
   flex-direction: column;
 }
 
+.title {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+}
+
 .img {
   padding: 2px;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  padding: 6px;
 }

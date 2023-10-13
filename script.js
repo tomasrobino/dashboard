@@ -1,7 +1,7 @@
 const list = document.querySelector("#elements");
 
 const data = [
-    {img: "https://picsum.photos/40", title: "Compras", subtitle: "dasd"},
+    {img: "https://picsum.photos/40", title: "Compras", subtitle: "10"},
     {img: "https://picsum.photos/40", title: "Belleza", subtitle: ""},
     {img: "https://picsum.photos/40", title: "Educacion", subtitle: ""},
     {img: "https://picsum.photos/40", title: "Efectivo", subtitle: ""},
@@ -19,20 +19,40 @@ data.map((value) => {
 
 
     let title = document.createElement("span");
+    title.className = "title";
     title.append(document.createTextNode(value.title));
 
     let subtitle = document.createElement("span");
-    subtitle.append(document.createTextNode(value.subtitle));
+    subtitle.append(document.createTextNode(value.subtitle+" transacciones"));
 
     let tns = document.createElement("div");
     tns.className = "tns";
     tns.append(title);
     tns.append(subtitle);
 
+    
+    let left = document.createElement("div");
+    left.className = "left";
+    left.append(img);
+    left.append(tns);
+
+
+    let buttons = document.createElement("div");
+    buttons.className = "buttonDiv";
+
+    ["assets/plus.png", "assets/search.png", "assets/pencil.png", "assets/bin.png"].forEach(element => {
+        let button = document.createElement("img");
+        button.className = "button";
+        button.src = element;
+        button.alt = "";
+        button.width = 30;
+        buttons.append(button);
+    });
+
+    
     let div = document.createElement("div");
     div.className = "details";
-    div.append(img);
-    div.append(tns);
+    div.append(left, buttons)
 
     let i = document.createElement("i");
     i.classList.add("uil", "uil-draggabledots");
