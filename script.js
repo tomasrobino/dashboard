@@ -12,12 +12,6 @@ var currentHover;
 
 const listElements = [];
 data.map((value) => {
-    let img = document.createElement("img");
-    img.className = "img";
-    img.src = value.img;
-    img.alt = "";
-
-
     let title = document.createElement("span");
     title.className = "title";
     title.append(document.createTextNode(value.title));
@@ -30,11 +24,19 @@ data.map((value) => {
     tns.append(title);
     tns.append(subtitle);
 
+    let img = document.createElement("img");
+    img.className = "img";
+    img.src = value.img;
+    img.alt = "";
+
+    let dots = document.createElement("img");
+    dots.className = "dots";
+    dots.src = "assets/six-dots.png";
+    dots.alt = "";
     
     let left = document.createElement("div");
     left.className = "left";
-    left.append(img);
-    left.append(tns);
+    left.append(dots, img, tns);
 
 
     let buttons = document.createElement("div");

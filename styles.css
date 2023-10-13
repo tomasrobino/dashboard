@@ -2,19 +2,35 @@ body {
   background-color: lightgrey;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .details {
+  min-height: fit-content;
+  height: 70px;
   width: 70vw;
-  background-color: red;
+  background-color: white;
   display: flex;
   justify-content: space-between;
-  border-color: black;
-  border-width: 2px;
-  border-style: solid;
   padding: 3px;
+  border-radius: 10px;
+  box-shadow: grey 5px 5px 5px;
+  margin: 5px;
 }
 
 .left {
   display: flex;
+  align-items: center;
+}
+
+.dots {
+  height: fit-content;
+  width: 40px;
+}
+
+.img {
+  padding: 2px;
 }
 
 .tns {
@@ -25,10 +41,6 @@ body {
 .title {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
-}
-
-.img {
-  padding: 2px;
 }
 
 .buttonDiv {
