@@ -68,7 +68,14 @@ data.map((value) => {
     item.addEventListener("dragstart", (e) => {
         setTimeout( () => {
             if (item.querySelector("ul")!==null) {
-                item.querySelector("ul").firstChild.classList.add("dragging");
+                if (item.querySelector("ul").querySelector("li")===null) {
+                    
+                    item.removeChild(item.querySelector("ul"));
+                    item.classList.remove("nested");
+                    item.classList.add("dragging");
+                } else {
+                    item.querySelector("ul").querySelector("li").classList.add("dragging");
+                }
             } else {
                 item.classList.add("dragging");
             }
