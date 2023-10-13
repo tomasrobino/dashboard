@@ -1,11 +1,11 @@
 const list = document.querySelector("#elements");
 
 const data = [
-    {img: "https://picsum.photos/40", title: "Compras", subtitle: "10"},
-    {img: "https://picsum.photos/40", title: "Belleza", subtitle: ""},
-    {img: "https://picsum.photos/40", title: "Educacion", subtitle: ""},
-    {img: "https://picsum.photos/40", title: "Efectivo", subtitle: ""},
-    {img: "https://picsum.photos/40", title: "Empresa", subtitle: ""}
+    {img: "https://picsum.photos/60", title: "Compras", subtitle: "10"},
+    {img: "https://picsum.photos/60", title: "Belleza", subtitle: ""},
+    {img: "https://picsum.photos/60", title: "Educacion", subtitle: ""},
+    {img: "https://picsum.photos/60", title: "Efectivo", subtitle: ""},
+    {img: "https://picsum.photos/60", title: "Empresa", subtitle: ""}
 ]
 
 var currentHover;
@@ -48,7 +48,6 @@ data.map((value) => {
         button.className = "button";
         button.src = element;
         button.alt = "";
-        button.width = 30;
         buttons.append(button);
     });
 
@@ -112,7 +111,7 @@ function dragEnd(e) {
     } else if (e.clientY > list.offsetTop+list.offsetHeight) {
         list.insertBefore(draggingItem, currentHover.nextSibling);
     } else {
-        list.insertBefore(draggingItem, currentHover);
+        list.insertBefore(draggingItem, currentHover.nextSibling);
         if (draggingItem.querySelector("ul") !== null && draggingItem.querySelector("ul").querySelector("li") === null) {
             draggingItem.remove(draggingItem.querySelector("ul"));
             draggingItem.classList.remove("nested");
