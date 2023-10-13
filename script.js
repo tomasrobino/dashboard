@@ -88,27 +88,31 @@ data.map((value) => {
         }
 
         let draggingItem = list.querySelector(".dragging");
-        if (draggingItem!==currentHover &&  e.clientY <= list.offsetTop+list.offsetHeight && e.clientY >= list.offsetTop && e.clientX > list.offsetLeft+200 && !draggingItem.classList.contains("nested")) {
-            if (currentHover.classList.contains("nested")) {
-                currentHover.querySelector("ul").append(draggingItem);
+        if (draggingItem!==currentHover) {
+            if (e.clientY <= list.offsetTop+list.offsetHeight && e.clientY >= list.offsetTop && e.clientX > list.offsetLeft+200 && !draggingItem.classList.contains("nested")) {
+                if (currentHover.classList.contains("nested")) {
+                    currentHover.querySelector("ul").append(draggingItem);
+                } else {
+                    let childList = document.createElement("ul");
+                    childList.append(draggingItem);
+                    currentHover.append(childList);
+                    currentHover.classList.add("nested")
+                }
+            } else if (e.clientY > list.offsetTop+list.offsetHeight) {
+                list.insertBefore(draggingItem, currentHover.nextSibling);
+                
+            } else if (e.clientY < list.offsetTop+30) {
+                list.insertBefore(draggingItem, currentHover.previousSibling);
             } else {
-                let childList = document.createElement("ul");
-                childList.append(draggingItem);
-                currentHover.append(childList);
-                currentHover.classList.add("nested")
-            }
-        } else if (e.clientY > list.offsetTop+list.offsetHeight) {
-            list.insertBefore(draggingItem, currentHover.nextSibling);
-        } else if (e.clientY < list.offsetTop) {
-            list.insertBefore(draggingItem, currentHover.previousSibling);
-        } else {
-            list.insertBefore(draggingItem, currentHover.nextSibling);
-            if (draggingItem.querySelector("ul") !== null && draggingItem.querySelector("ul").querySelector("li") === null) {
-                draggingItem.remove(draggingItem.querySelector("ul"));
-                draggingItem.classList.remove("nested");
+                list.insertBefore(draggingItem, currentHover.nextSibling);
+                if (draggingItem.querySelector("ul") !== null && draggingItem.querySelector("ul").querySelector("li") === null) {
+                    draggingItem.remove(draggingItem.querySelector("ul"));
+                    draggingItem.classList.remove("nested");
+                }
             }
         }
     })
+
 
     listElements.push(item)
 })
