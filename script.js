@@ -1,26 +1,38 @@
 const list = document.querySelector("#elements");
 
 const data = [
-    {img: "", title: "Compras", amnt: ""},
-    {img: "", title: "Belleza", amnt: ""},
-    {img: "", title: "Educacion", amnt: ""},
-    {img: "", title: "Efectivo", amnt: ""},
-    {img: "", title: "Empresa", amnt: ""}
+    {img: "https://picsum.photos/40", title: "Compras", subtitle: "dasd"},
+    {img: "https://picsum.photos/40", title: "Belleza", subtitle: ""},
+    {img: "https://picsum.photos/40", title: "Educacion", subtitle: ""},
+    {img: "https://picsum.photos/40", title: "Efectivo", subtitle: ""},
+    {img: "https://picsum.photos/40", title: "Empresa", subtitle: ""}
 ]
 
 var currentHover;
 
 const listElements = [];
 data.map((value) => {
+    let img = document.createElement("img");
+    img.className = "img";
+    img.src = value.img;
+    img.alt = "";
+
+
     let title = document.createElement("span");
     title.append(document.createTextNode(value.title));
 
     let subtitle = document.createElement("span");
+    subtitle.append(document.createTextNode(value.subtitle));
 
+    let tns = document.createElement("div");
+    tns.className = "tns";
+    tns.append(title);
+    tns.append(subtitle);
 
     let div = document.createElement("div");
     div.className = "details";
-    div.append(title);
+    div.append(img);
+    div.append(tns);
 
     let i = document.createElement("i");
     i.classList.add("uil", "uil-draggabledots");
