@@ -58,7 +58,7 @@ function dragEnd(e) {
     let draggingItem = e.target;
     draggingItem.classList.remove("dragging");
     
-    if (e.clientY <= list.offsetTop+list.offsetHeight && e.clientY >= list.offsetTop && e.clientX > list.offsetLeft+50 && !draggingItem.classList.contains("nested")) {
+    if (draggingItem!==currentHover &&  e.clientY <= list.offsetTop+list.offsetHeight && e.clientY >= list.offsetTop && e.clientX > list.offsetLeft+50 && !draggingItem.classList.contains("nested")) {
         if (currentHover.classList.contains("nested")) {
             currentHover.querySelector("ul").append(draggingItem);
         } else {
@@ -71,5 +71,9 @@ function dragEnd(e) {
         list.insertBefore(draggingItem, currentHover.nextSibling);
     } else {
         list.insertBefore(draggingItem, currentHover);
+        if (draggingItem.querySelector("ul") !== null && draggingItem.querySelector("ul").querySelector("li") === null) {
+            draggingItem.remove(draggingItem.querySelector("ul"));
+            draggingItem.classList.remove("nested");
+        }
     }
 }
