@@ -165,23 +165,30 @@ window.addEventListener("mousemove", (e) => {
     if (dragged) {
         let siblings = [...list.querySelectorAll(".item:not(.dragging)")];
         let nextSibling = siblings.find(sibling => {
-            return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
-        });
-        if (!nextSibling) {
-            //nextSibling = list.lastChild
-        }
-        if (e.clientX >= 50 && !dragged.classList.contains("nested")) {
-            nextSibling.querySelector("ul").append(dragged);
-            nextSibling.classList.add("nested");
-            console.log(list)
-        } else { //Can't nest because held item is itself nested
-            list.insertBefore(dragged, nextSibling);
-            if (!dragged.querySelector("ul").querySelector("li")) {
-                dragged.classList.remove("nested");
+            if (e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2) {
+                return true;
             }
+        });
+        if (nextSibling) {
+            if (e.clientX >= 50 && !dragged.classList.contains("nested")) {
+                nextSibling.querySelector("ul").append(dragged);
+                nextSibling.classList.add("nested");
+            } else { //Can't nest because held item is itself nested
+                list.insertBefore(dragged, nextSibling);
+                if (!dragged.querySelector("ul").querySelector("li")) {
+                    dragged.classList.remove("nested");
+                }
+            }
+        } else {
+            list.append(dragged);
         }
-
         //Cleanup
+        siblings = [...list.querySelectorAll(".item:not(.dragging)")];
+        siblings.forEach(element => {
+            if (!element.querySelector("ul").querySelector("li")) {
+                element.classList.remove("nested");
+            }
+        });
     }
 
     let holding = list.parentNode.querySelector(".holding");
