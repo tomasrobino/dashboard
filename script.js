@@ -45,12 +45,22 @@ data.map((value) => {
     let buttons = document.createElement("div");
     buttons.className = "buttonDiv";
 
-    ["assets/plus.png", "assets/search.png", "assets/pencil.png", "assets/bin.png"].forEach(element => {
+    [{src: "assets/plus.png", tooltip: "Añadir"}, {src: "assets/search.png", tooltip: "Ver transacciones"}, {src: "assets/pencil.png", tooltip: "Editar"}, {src: "assets/bin.png", tooltip: "Eliminar"},].forEach(element => {
         let button = document.createElement("img");
         button.className = "button";
-        button.src = element;
+        button.src = element.src;
         button.alt = "";
-        buttons.append(button);
+        button.draggable = false;
+
+        let span = document.createElement("span");
+        span.className = "tooltip";
+        span.append(document.createTextNode(element.tooltip));
+        
+
+        let buttonDiv = document.createElement("div");
+        buttonDiv.className = "bDiv";
+        buttonDiv.append(button, span);
+        buttons.append(buttonDiv);
     });
 
     
