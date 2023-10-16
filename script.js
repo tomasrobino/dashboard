@@ -67,7 +67,6 @@ data.map((value) => {
     let box = dots.parentNode.parentNode.parentNode
 
     dots.addEventListener("dragstart", (e) => {
-        console.log(box)
         setTimeout( () => {
             if (box.querySelector("ul")!==null) {
                 if (box.querySelector("ul").querySelector("li")===null) {
@@ -93,16 +92,30 @@ data.map((value) => {
             currentHover = e.currentTarget;
         }
 
+        //console.log(box.parentNode.parentNode)
         let draggingItem = list.querySelector(".dragging");
         if (draggingItem!==currentHover) {
+            //Adding nest
             if (e.clientY <= list.offsetTop+list.offsetHeight && e.clientY >= list.offsetTop && e.clientX > list.offsetLeft+50 && !draggingItem.classList.contains("nested")) {
-                if (currentHover.classList.contains("nested")) {
-                    currentHover.querySelector("ul").append(draggingItem);
+                if (box.parentNode.parentNode.tagName==="LI") {
+                    console.log(3333)
+                    let parent = box.parentNode.parentNode;
+                    console.log(parent)
+                    parent.removeChild(parent.querySelector("ul"))
+                    
+                    box.parentNode.removeChild(box);
+                    parent.removeChild(parent.querySelector("ul"))
+                    parent.classList.remove("nested")
+                    console.log(parent)
                 } else {
-                    let childList = document.createElement("ul");
-                    childList.append(draggingItem);
-                    currentHover.append(childList);
-                    currentHover.classList.add("nested")
+                    if (currentHover.classList.contains("nested")) {
+                        currentHover.querySelector("ul").append(draggingItem);
+                    } else {
+                        let childList = document.createElement("ul");
+                        childList.append(draggingItem);
+                        currentHover.append(childList);
+                        currentHover.classList.add("nested")
+                    }
                 }
             } else if (e.clientY > list.offsetTop+list.offsetHeight) {
                 list.insertBefore(draggingItem, currentHover.nextSibling);
