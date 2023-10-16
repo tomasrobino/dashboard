@@ -1,11 +1,11 @@
 const list = document.querySelector("#elements");
 
 const data = [
-    {img: "https://picsum.photos/60", title: "Compras", subtitle: "10"},
-    {img: "https://picsum.photos/60", title: "Belleza", subtitle: ""},
-    {img: "https://picsum.photos/60", title: "Educacion", subtitle: ""},
-    {img: "https://picsum.photos/60", title: "Efectivo", subtitle: ""},
-    {img: "https://picsum.photos/60", title: "Empresa", subtitle: ""}
+    {img: "https://picsum.photos/60", title: "Compras", subtitle: "10", color: "red"},
+    {img: "https://picsum.photos/60", title: "Belleza", subtitle: "", color: "blue"},
+    {img: "https://picsum.photos/60", title: "Educacion", subtitle: "", color: "green"},
+    {img: "https://picsum.photos/60", title: "Efectivo", subtitle: "", color: "yellow"},
+    {img: "https://picsum.photos/60", title: "Empresa", subtitle: "", color: "pink"}
 ]
 
 var currentHover;
@@ -14,6 +14,7 @@ const listElements = [];
 data.map((value) => {
     let title = document.createElement("span");
     title.className = "title";
+    title.style.color = value.color;
     title.append(document.createTextNode(value.title));
 
     let subtitle = document.createElement("span");
@@ -45,7 +46,7 @@ data.map((value) => {
     let buttons = document.createElement("div");
     buttons.className = "buttonDiv";
 
-    [{src: "assets/plus.png", tooltip: "Añadir"}, {src: "assets/search.png", tooltip: "Ver transacciones"}, {src: "assets/pencil.png", tooltip: "Editar"}, {src: "assets/bin.png", tooltip: "Eliminar"},].forEach(element => {
+    [{src: "assets/plus.svg", tooltip: "Añadir"}, {src: "assets/search.png", tooltip: "Ver transacciones"}, {src: "assets/pencil.png", tooltip: "Editar"}, {src: "assets/bin.png", tooltip: "Eliminar"},].forEach(element => {
         let button = document.createElement("img");
         button.className = "button";
         button.src = element.src;
@@ -59,6 +60,7 @@ data.map((value) => {
 
         let buttonDiv = document.createElement("div");
         buttonDiv.className = "bDiv";
+
         buttonDiv.append(button, span);
         buttons.append(buttonDiv);
     });
