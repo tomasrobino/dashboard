@@ -29,11 +29,13 @@ data.map((value) => {
     img.className = "img";
     img.src = value.img;
     img.alt = "";
+    img.draggable = false;
 
     let dots = document.createElement("img");
     dots.className = "dots";
     dots.src = "assets/six-dots.png";
     dots.alt = "";
+    dots.draggable = false;
     
     let left = document.createElement("div");
     left.className = "left";
@@ -56,16 +58,39 @@ data.map((value) => {
     div.className = "details";
     div.append(left, buttons)
 
-    let i = document.createElement("i");
-    i.classList.add("uil", "uil-draggabledots");
+    //let i = document.createElement("i");
+    //i.classList.add("uil", "uil-draggabledots");
     
     let item = document.createElement("li");
     item.className = "item";
-    item.draggable = true;
-    item.append(div, i);
+    //item.draggable = true;
+    item.append(div);
 
     let box = dots.parentNode.parentNode.parentNode
 
+
+    dots.addEventListener("mousedown", (e) => {
+        if (box.querySelector("ul")!==null) {
+            if (box.querySelector("ul").querySelector("li")===null) {
+                box.removeChild(box.querySelector("ul"));
+                box.classList.remove("nested");
+                box.classList.add("dragging");
+            } else {
+                box.classList.add("dragging");
+            }
+        } else {
+            box.classList.add("dragging");
+        }
+
+        let holding = box.querySelector("div").cloneNode(true);
+        holding.classList.add("holding");
+        list.parentNode.append(holding);
+        holding.style.position = "absolute";
+        //holding.style.left = "100px";
+        //holding.style.top = "100px";
+    })
+
+    /*
     dots.addEventListener("dragstart", (e) => {
         setTimeout( () => {
             if (box.querySelector("ul")!==null) {
@@ -81,6 +106,7 @@ data.map((value) => {
             }
         }, 0);
     });
+    
     dots.addEventListener("dragend", () => {
         let draggingItem = box;
         draggingItem.classList.remove("dragging");
@@ -131,8 +157,41 @@ data.map((value) => {
             }
         }
     })
+    */
 
     listElements.push(item)
+})
+
+list.addEventListener("mousemove", (e) => {
+    let dragged = list.querySelector(".dragging");
+    
+    if (dragged) {
+        let siblings = [...list.querySelectorAll(".item:not(.dragging)")];
+        let nextSibling = siblings.find(sibling => {
+            return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
+        });
+
+        list.insertBefore(dragged, nextSibling);
+    }
+
+    let holding = list.parentNode.querySelector(".holding");
+
+    if (holding) {
+        holding.style.left = e.clientX + "px";
+        holding.style.top = e.clientY + "px";
+    }
+})
+
+window.addEventListener("mouseup", (e) => {
+    let dragged = list.querySelector(".dragging");
+    if (dragged) {
+        dragged.classList.remove("dragging");
+    }
+    let holding = list.parentNode.querySelector(".holding");
+    if (holding) {
+        e.preventDefault()
+        holding.remove();
+    }
 })
 
 list.append(...listElements);
