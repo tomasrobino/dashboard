@@ -61,23 +61,20 @@ data.map((value) => {
     //let i = document.createElement("i");
     //i.classList.add("uil", "uil-draggabledots");
     
+    let ul = document.createElement("ul");
+
     let item = document.createElement("li");
     item.className = "item";
     //item.draggable = true;
-    item.append(div);
+    item.append(div, ul);
 
     let box = dots.parentNode.parentNode.parentNode
 
 
     dots.addEventListener("mousedown", (e) => {
-        if (box.querySelector("ul")!==null) {
-            if (box.querySelector("ul").querySelector("li")===null) {
-                box.removeChild(box.querySelector("ul"));
-                box.classList.remove("nested");
-                box.classList.add("dragging");
-            } else {
-                box.classList.add("dragging");
-            }
+        if (!box.querySelector("ul").querySelector("li")) {
+            box.classList.remove("nested");
+            box.classList.add("dragging");
         } else {
             box.classList.add("dragging");
         }
@@ -162,7 +159,7 @@ data.map((value) => {
     listElements.push(item)
 })
 
-list.addEventListener("mousemove", (e) => {
+window.addEventListener("mousemove", (e) => {
     let dragged = list.querySelector(".dragging");
     
     if (dragged) {
@@ -170,8 +167,21 @@ list.addEventListener("mousemove", (e) => {
         let nextSibling = siblings.find(sibling => {
             return e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2;
         });
+        if (!nextSibling) {
+            //nextSibling = list.lastChild
+        }
+        if (e.clientX >= 50 && !dragged.classList.contains("nested")) {
+            nextSibling.querySelector("ul").append(dragged);
+            nextSibling.classList.add("nested");
+            console.log(list)
+        } else { //Can't nest because held item is itself nested
+            list.insertBefore(dragged, nextSibling);
+            if (!dragged.querySelector("ul").querySelector("li")) {
+                dragged.classList.remove("nested");
+            }
+        }
 
-        list.insertBefore(dragged, nextSibling);
+        //Cleanup
     }
 
     let holding = list.parentNode.querySelector(".holding");
