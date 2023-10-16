@@ -163,7 +163,13 @@ window.addEventListener("mousemove", (e) => {
     let dragged = list.querySelector(".dragging");
     
     if (dragged) {
-        let siblings = [...list.querySelectorAll(".item:not(.dragging)")];
+        let siblings = [...list.children];
+        siblings.forEach((element, i) => {
+            if (element.classList.contains("dragging")) {
+                siblings.splice(i, 1);
+            }
+        });
+        console.log(siblings)
         let nextSibling = siblings.find(sibling => {
             if (e.clientY <= sibling.offsetTop + sibling.offsetHeight / 2) {
                 return true;
